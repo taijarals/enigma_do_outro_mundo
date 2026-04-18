@@ -1,5 +1,5 @@
 import streamlit as st
-from conexao import supabase
+from db.conexao import supabase
 
 st.set_page_config(page_title="Cadastro de Usuário")
 

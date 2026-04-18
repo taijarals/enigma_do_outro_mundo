@@ -1,4 +1,4 @@
-from db.supabase import supabase
+from db.conexao import supabase
 
 def login_usuario(email, senha):
     response = supabase.table("usuario") \
