@@ -22,3 +22,15 @@ def render_login():
                 st.rerun()
             else:
                 st.error("Email ou senha inválidos")
+
+def login_usuario(email, senha):
+    try:
+        response = supabase.auth.sign_in_with_password({
+            "email": email,
+            "password": senha
+        })
+
+        return response.user
+
+    except Exception:
+        return None
