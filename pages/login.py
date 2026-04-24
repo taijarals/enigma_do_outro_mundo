@@ -1,6 +1,25 @@
 import streamlit as st
-from services.auth import login_usuario
+from db.conexao import supabase
 
+# ------------------------
+# FUNÇÃO DE LOGIN
+# ------------------------
+def login_usuario(email, senha):
+    try:
+        response = supabase.auth.sign_in_with_password({
+            "email": email,
+            "password": senha
+        })
+
+        return response.user
+
+    except Exception:
+        return None
+
+
+# ------------------------
+# TELA DE LOGIN
+# ------------------------
 def render_login():
     st.title("🔐 Login")
 
@@ -23,14 +42,12 @@ def render_login():
             else:
                 st.error("Email ou senha inválidos")
 
-def login_usuario(email, senha):
-    try:
-        response = supabase.auth.sign_in_with_password({
-            "email": email,
-            "password": senha
-        })
+    # ------------------------
+    # LINK PARA CADASTRO 👇
+    # ------------------------
+    st.markdown("---")
+    st.write("Ainda não tem conta?")
 
-        return response.user
-
-    except Exception:
-        return None
+    if st.button("👉 Criar usuário"):
+        st.session_state["tela"] = "cadastro"
+        st.rerun()
