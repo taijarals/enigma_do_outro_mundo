@@ -23,9 +23,11 @@ def render_login():
             else:
                 st.error("Email ou senha inválidos")
 
-    # 🔥 BOTÃO FUNCIONANDO COM MULTIPAGE
     st.markdown("---")
-    st.write("Ainda não tem conta?")
 
     if st.button("👉 Criar usuário"):
         st.switch_page("pages/cadastro.py")
+
+
+# 🔥 ESSENCIAL
+render_login()

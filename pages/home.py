@@ -19,3 +19,7 @@ def render_home():
         logout_usuario()
         st.session_state["usuario"] = None
         st.switch_page("pages/login.py")
+
+
+# 🔥 ESSENCIAL
+render_home()

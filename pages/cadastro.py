@@ -27,3 +27,7 @@ def render_cadastro():
 
     if st.button("⬅️ Voltar para login"):
         st.switch_page("pages/login.py")
+
+
+# 🔥 ESSENCIAL
+render_cadastro()
