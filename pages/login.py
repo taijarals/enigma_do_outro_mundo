@@ -17,16 +17,15 @@ def render_login():
 
             if user:
                 perfil = buscar_perfil(user.id)
-
                 st.session_state["usuario"] = perfil
                 st.success("Login realizado!")
                 st.rerun()
             else:
                 st.error("Email ou senha inválidos")
 
+    # 🔥 BOTÃO FUNCIONANDO COM MULTIPAGE
     st.markdown("---")
     st.write("Ainda não tem conta?")
 
     if st.button("👉 Criar usuário"):
-        st.session_state["tela"] = "cadastro"
-        st.rerun()
+        st.switch_page("pages/cadastro.py")

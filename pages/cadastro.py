@@ -26,5 +26,4 @@ def render_cadastro():
     st.markdown("---")
 
     if st.button("⬅️ Voltar para login"):
-        st.session_state["tela"] = "login"
-        st.rerun()
+        st.switch_page("pages/login.py")

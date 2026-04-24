@@ -1,27 +1,20 @@
 from db.conexao import supabase
 
-# ------------------------
-# LOGIN (Auth Supabase)
-# ------------------------
+# LOGIN
 def login_usuario(email, senha):
     try:
         response = supabase.auth.sign_in_with_password({
             "email": email,
             "password": senha
         })
-
         return response.user
-
     except Exception:
         return None
 
 
-# ------------------------
-# CADASTRO (Auth + Perfil)
-# ------------------------
+# CADASTRO
 def cadastrar_usuario(nick, email, senha, tipo):
     try:
-        # cria no Auth
         auth_response = supabase.auth.sign_up({
             "email": email,
             "password": senha
@@ -32,7 +25,6 @@ def cadastrar_usuario(nick, email, senha, tipo):
         if user is None:
             return None
 
-        # cria perfil
         supabase.table("usuario").insert({
             "id": user.id,
             "nick_usuario": nick,
@@ -49,9 +41,7 @@ def cadastrar_usuario(nick, email, senha, tipo):
         return None
 
 
-# ------------------------
-# BUSCAR PERFIL
-# ------------------------
+# PERFIL
 def buscar_perfil(user_id):
     response = supabase.table("usuario") \
         .select("*") \
@@ -64,9 +54,7 @@ def buscar_perfil(user_id):
     return None
 
 
-# ------------------------
 # LOGOUT
-# ------------------------
 def logout_usuario():
     supabase.auth.sign_out()
     return None

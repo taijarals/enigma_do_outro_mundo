@@ -2,7 +2,12 @@ import streamlit as st
 from services.auth import logout_usuario
 
 def render_home():
-    usuario = st.session_state["usuario"]
+    usuario = st.session_state.get("usuario")
+
+    if not usuario:
+        st.warning("Você não está logado")
+        st.switch_page("pages/login.py")
+        return
 
     st.title(f"👋 Bem-vindo, {usuario['nick_usuario']}")
 
@@ -11,6 +16,6 @@ def render_home():
     st.write("⭐ Nível:", usuario.get("nivel_usuario", 1))
 
     if st.button("Sair"):
-        st.session_state["usuario"] = logout_usuario()
-        st.session_state["tela"] = "login"
-        st.rerun()
+        logout_usuario()
+        st.session_state["usuario"] = None
+        st.switch_page("pages/login.py")
