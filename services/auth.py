@@ -14,3 +14,17 @@ def login_usuario(email, senha):
 
 def logout_usuario():
     return None
+
+    from supabase import create_client
+
+#funcao de cadastro de usuario
+def cadastrar_usuario(email, senha):
+    try:
+        response = supabase.auth.sign_up({
+            "email": email,
+            "password": senha
+        })
+        return response.user
+    except Exception as e:
+        print(e)
+        return None
