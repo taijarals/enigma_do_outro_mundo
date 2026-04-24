@@ -7,9 +7,10 @@ def render_home():
     st.title(f"👋 Bem-vindo, {usuario['nick_usuario']}")
 
     st.write("📧 Email:", usuario["email_usuario"])
-    st.write("🏆 Pontuação:", usuario["pontuacao_usuario"])
-    st.write("⭐ Nível:", usuario["nivel_usuario"])
+    st.write("🏆 Pontuação:", usuario.get("pontuacao_usuario", 0))
+    st.write("⭐ Nível:", usuario.get("nivel_usuario", 1))
 
     if st.button("Sair"):
         st.session_state["usuario"] = logout_usuario()
+        st.session_state["tela"] = "login"
         st.rerun()

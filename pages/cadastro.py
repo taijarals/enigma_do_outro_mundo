@@ -1,5 +1,5 @@
 import streamlit as st
-from db.conexao import supabase
+from services.auth import cadastrar_usuario
 
 def render_cadastro():
     st.title("📝 Cadastro de Usuário")
@@ -15,30 +15,16 @@ def render_cadastro():
     if submit:
         if not nick or not email or not senha:
             st.warning("Preencha todos os campos!")
-            return
+        else:
+            user = cadastrar_usuario(nick, email, senha, tipo)
 
-        try:
-            # 🔐 1. Cria usuário no Auth
-            auth_response = supabase.auth.sign_up({
-                "email": email,
-                "password": senha
-            })
+            if user:
+                st.success("Usuário cadastrado com sucesso! 🎉")
+            else:
+                st.error("Erro ao cadastrar usuário")
 
-            user = auth_response.user
+    st.markdown("---")
 
-            if user is None:
-                st.error("Erro ao criar usuário no Auth")
-                return
-
-            # 🗄️ 2. Salva dados na tabela usuario
-            supabase.table("usuario").insert({
-                "id": user.id,  # 🔥 chave de ligação com Auth
-                "nick_usuario": nick,
-                "email_usuario": email,
-                "tipo_usuario": tipo
-            }).execute()
-
-            st.success("Usuário cadastrado com sucesso! 🎉")
-
-        except Exception as e:
-            st.error(f"Erro: {e}")
+    if st.button("⬅️ Voltar para login"):
+        st.session_state["tela"] = "login"
+        st.rerun()
